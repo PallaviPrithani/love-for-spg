@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Boyfriend's Day! ✨</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Caveat for handwriting, Plus Jakarta Sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FFFDF9',
+            softblush: '#FDF2F4',
+            roseaccent: '#E1707F',
+            rosedark: '#B23A48',
+            terracotta: '#D47355',
+            warmgold: '#D4AF37',
+            cardbg: '#FFF9F7'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            handwritten: ['"Caveat"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* 3D Flip Card Styles */
+    .perspective {
+      perspective: 1000px;
+    }
+    .transform-style-preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* Floating Heart Animation */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(0.6) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.1) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .heart-particle {
+      position: fixed;
+      pointer-events: none;
+      animation: floatUp linear infinite;
+      z-index: 10;
+    }
+
+    /* Tape overlay on Polaroids */
+    .washi-tape {
+      background: rgba(255, 237, 213, 0.7);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    /* Pulsing glow */
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(225, 112, 127, 0.3); }
+      50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(225, 112, 127, 0.6); }
+    }
+    .glow-pulse {
+      animation: gentlePulse 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FFFDF9] text-[#2D2A2A] font-sans antialiased selection:bg-roseaccent selection:text-white relative overflow-x-hidden">
+
+  <div id="heartContainer" class="pointer-events-none fixed inset-0 overflow-hidden z-0"></div>
+
+  <!-- Top Floating Ambient Audio & Customize Bar -->
+  <header class="fixed top-4 left-0 right-0 z-40 px-4 max-w-5xl mx-auto flex items-center justify-between pointer-events-none">
+    <div class="pointer-events-auto bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-rose-100 shadow-sm flex items-center space-x-2 text-xs font-medium text-gray-700">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+      <span id="headerBoyfriendName">For My Favorite Human</span>
+    </div>
+
+    <div class="pointer-events-auto flex items-center space-x-2">
+      <!-- Ambient Lo-fi Music Player Toggle -->
+      <button id="musicToggleBtn" class="flex items-center space-x-2 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-rose-200 shadow-sm hover:shadow-md transition text-xs font-semibold text-rosedark">
+        <svg id="musicPlayIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="musicPauseIcon" class="w-4 h-4 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        <span id="musicStatusText">Lo-Fi Tunes</span>
+      </button>
+
+      <!-- Personalize Drawer Toggle -->
+      <button id="drawerToggleBtn" class="bg-rosedark text-white px-3.5 py-1.5 rounded-full shadow-sm hover:bg-roseaccent transition text-xs font-medium flex items-center space-x-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+        <span>Edit Card</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 pb-12 relative">
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-rosedark text-sm font-semibold tracking-wide uppercase mb-6 shadow-sm">
+        <span>✨ National Boyfriend's Day Celebration</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-gray-900 leading-tight max-w-3xl mb-4">
+        To My Favorite Guy, <br>
+        <span id="heroBoyfriendName" class="text-rosedark font-handwritten text-5xl sm:text-7xl md:text-8xl">Gini</span>!
+      </h1>
+
+      <p class="max-w-xl text-gray-600 text-base sm:text-lg mb-8 leading-relaxed">
+        Today is all about you: your warmth, your contagious laugh, your patient soul, and every small moment that makes life 100x brighter.
+      </p>
+
+      <!-- Interactive Days Counter / Badge -->
+      <div class="bg-white/80 backdrop-blur-md border border-rose-100 rounded-3xl p-6 shadow-xl mb-10 max-w-md w-full mx-auto glow-pulse">
+        <p class="text-xs font-bold uppercase tracking-wider text-roseaccent mb-3">Our Journey So Far</p>
+        <div class="grid grid-cols-3 gap-2 text-center divide-x divide-rose-100">
+          <div>
+            <span id="counterDays" class="text-2xl sm:text-3xl font-extrabold text-rosedark font-serif">--</span>
+            <p class="text-xs text-gray-500 font-medium mt-1">Days</p>
+          </div>
+          <div>
+            <span id="counterHours" class="text-2xl sm:text-3xl font-extrabold text-rosedark font-serif">--</span>
+            <p class="text-xs text-gray-500 font-medium mt-1">Hours</p>
+          </div>
+          <div>
+            <span id="counterLove" class="text-2xl sm:text-3xl font-extrabold text-roseaccent font-serif">∞</span>
+            <p class="text-xs text-gray-500 font-medium mt-1">Giggles & Love</p>
+          </div>
+        </div>
+        <p id="counterSubtitle" class="text-xs text-gray-500 mt-4 italic font-handwritten text-lg">Since the day you walked into my life</p>
+      </div>
+
+      <!-- Quick Jump Button -->
+      <a href="#letterSection" class="inline-flex items-center space-x-2 bg-rosedark text-white font-medium px-6 py-3 rounded-full hover:bg-roseaccent transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+        <span>Open Your Special Letter</span>
+        <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+      </a>
+    </section>
+
+    <section class="py-16 px-4 max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="text-roseaccent text-sm font-bold uppercase tracking-widest">Captured Memories</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-gray-800 mt-1">Our Favorite Chapters</h2>
+        <p class="text-gray-500 mt-2 text-sm sm:text-base">A few snapshots of moments I replay in my head all the time.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4">
+        <!-- Polaroid 1 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform group-hover:-translate-y-2 group-hover:rotate-1 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-2 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center relative">
+            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#FDF0ED"/>
+              <circle cx="200" cy="160" r="70" fill="#F8C5BD"/>
+              <path d="M120 320C120 260 160 230 200 230C240 230 280 260 280 320" fill="#E1707F"/>
+              <text x="50%" y="360" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#8A4A4A">First Unforgettable Date</text>
+            </svg>
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Where butterflies turned into forever smiles ☕️</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 01</span>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform -rotate-1 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 -rotate-2 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#EBF4F6"/>
+              <circle cx="200" cy="180" r="90" fill="#C4E0E5"/>
+              <path d="M160 170L190 200L250 140" stroke="#3A7080" stroke-width="8" stroke-linecap="round"/>
+              <text x="50%" y="340" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#2D5564">Roadtrips & Late Drives</text>
+            </svg>
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Singing terribly off-key with the windows rolled down 🎶</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 02</span>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="400" fill="#FFF2E2"/>
+              <path d="M200 130 C170 80 90 90 90 160 C90 220 200 290 200 290 C200 290 310 220 310 160 C310 90 230 80 200 130 Z" fill="#F8C57A"/>
+              <text x="50%" y="350" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#8B602A">Cozy Couch Potato Evenings</text>
+            </svg>
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">My safe haven at the end of every exhausting day 🛋️</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 03</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-b from-transparent via-rose-50/50 to-transparent">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <span class="text-roseaccent text-sm font-bold uppercase tracking-widest">Why You're My Champion</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-gray-800 mt-1">Little Things That Make You Great</h2>
+          <p class="text-gray-500 mt-2 text-sm sm:text-base">Tap any card to flip and read why you're one of a kind.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Card 1 -->
+          <div class="flip-card h-64 perspective cursor-pointer" onclick="toggleCardFlip(this)">
+            <div class="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d rounded-2xl shadow-sm hover:shadow-lg border border-rose-100 bg-white p-6 flex flex-col justify-between">
+              <!-- Front -->
+              <div class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between bg-white rounded-2xl">
+                <span class="text-3xl">🛠️</span>
+                <div>
+                  <h3 class="font-bold text-lg text-gray-800">Chief Problem Solver</h3>
+                  <p class="text-xs text-gray-400 mt-1">Click to flip ↷</p>
+                </div>
+                <div class="h-1 w-12 bg-rose-200 rounded"></div>
+              </div>
+              <!-- Back -->
+              <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
+                <p class="text-sm font-medium leading-relaxed">
+                  Whether it's debugging my bad mood, fixing things around the house, or calm listening when I'm stressed. You always know what to do.
+                </p>
+                <span class="text-xs text-roseaccent font-bold mt-4">10/10 Reliability Rating</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="flip-card h-64 perspective cursor-pointer" onclick="toggleCardFlip(this)">
+            <div class="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d rounded-2xl shadow-sm hover:shadow-lg border border-rose-100 bg-white p-6 flex flex-col justify-between">
+              <!-- Front -->
+              <div class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between bg-white rounded-2xl">
+                <span class="text-3xl">🍳</span>
+                <div>
+                  <h3 class="font-bold text-lg text-gray-800">Snack & Food Hero</h3>
+                  <p class="text-xs text-gray-400 mt-1">Click to flip ↷</p>
+                </div>
+                <div class="h-1 w-12 bg-rose-200 rounded"></div>
+              </div>
+              <!-- Back -->
+              <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
+                <p class="text-sm font-medium leading-relaxed">
+                  For sharing your fries, making impromptu treats, and never judging when I ask for a midnight sweet tooth run.
+                </p>
+                <span class="text-xs text-roseaccent font-bold mt-4">Michelin Star Sweetness</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="flip-card h-64 perspective cursor-pointer" onclick="toggleCardFlip(this)">
+            <div class="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d rounded-2xl shadow-sm hover:shadow-lg border border-rose-100 bg-white p-6 flex flex-col justify-between">
+              <!-- Front -->
+              <div class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between bg-white rounded-2xl">
+                <span class="text-3xl">🫂</span>
+                <div>
+                  <h3 class="font-bold text-lg text-gray-800">The Warmest Hugs</h3>
+                  <p class="text-xs text-gray-400 mt-1">Click to flip ↷</p>
+                </div>
+                <div class="h-1 w-12 bg-rose-200 rounded"></div>
+              </div>
+              <!-- Back -->
+              <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
+                <p class="text-sm font-medium leading-relaxed">
+                  Your hugs make the chaos of the world vanish in 5 seconds flat. It's scientifically proven to lower my cortisol.
+                </p>
+                <span class="text-xs text-roseaccent font-bold mt-4">Unlimited Supply Required</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="flip-card h-64 perspective cursor-pointer" onclick="toggleCardFlip(this)">
+            <div class="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d rounded-2xl shadow-sm hover:shadow-lg border border-rose-100 bg-white p-6 flex flex-col justify-between">
+              <!-- Front -->
+              <div class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between bg-white rounded-2xl">
+                <span class="text-3xl">⚡️</span>
+                <div>
+                  <h3 class="font-bold text-lg text-gray-800">Biggest Hype Partner</h3>
+                  <p class="text-xs text-gray-400 mt-1">Click to flip ↷</p>
+                </div>
+                <div class="h-1 w-12 bg-rose-200 rounded"></div>
+              </div>
+              <!-- Back -->
+              <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
+                <p class="text-sm font-medium leading-relaxed">
+                  You believe in me even when I doubt myself. Having you in my corner is my greatest cheat code in life.
+                </p>
+                <span class="text-xs text-roseaccent font-bold mt-4">#1 Supporter Ever</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 max-w-5xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <span class="text-roseaccent text-sm font-bold uppercase tracking-widest">Special Perks</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-gray-800 mt-1">Boyfriend Privilege Coupons</h2>
+        <p class="text-gray-500 mt-2 text-sm sm:text-base">Tap on any coupon to redeem. Non-expiring & 100% genuine!</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Coupon 1 -->
+        <div class="coupon-card bg-white border-2 border-dashed border-rose-300 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition relative overflow-hidden group">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl">💆‍♂️</span>
+              <h4 class="font-bold text-gray-800">15-Min Head or Back Massage</h4>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">No questions asked, anytime requested.</p>
+          </div>
+          <button onclick="redeemCoupon(this)" class="coupon-btn px-4 py-2 bg-rose-50 text-rosedark border border-rose-300 rounded-xl text-xs font-bold hover:bg-rosedark hover:text-white transition whitespace-nowrap">
+            Redeem
+          </button>
+        </div>
+
+        <!-- Coupon 2 -->
+        <div class="coupon-card bg-white border-2 border-dashed border-rose-300 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition relative overflow-hidden group">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl">🍕</span>
+              <h4 class="font-bold text-gray-800">Full Dinner Control</h4>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">You choose the place & meal, zero debate!</p>
+          </div>
+          <button onclick="redeemCoupon(this)" class="coupon-btn px-4 py-2 bg-rose-50 text-rosedark border border-rose-300 rounded-xl text-xs font-bold hover:bg-rosedark hover:text-white transition whitespace-nowrap">
+            Redeem
+          </button>
+        </div>
+
+        <!-- Coupon 3 -->
+        <div class="coupon-card bg-white border-2 border-dashed border-rose-300 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition relative overflow-hidden group">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl">🏆</span>
+              <h4 class="font-bold text-gray-800">Win 1 Playful Argument Pass</h4>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Instant unconditional agreement from me.</p>
+          </div>
+          <button onclick="redeemCoupon(this)" class="coupon-btn px-4 py-2 bg-rose-50 text-rosedark border border-rose-300 rounded-xl text-xs font-bold hover:bg-rosedark hover:text-white transition whitespace-nowrap">
+            Redeem
+          </button>
+        </div>
+
+        <!-- Coupon 4 -->
+        <div class="coupon-card bg-white border-2 border-dashed border-rose-300 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition relative overflow-hidden group">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl">🎮</span>
+              <h4 class="font-bold text-gray-800">Uninterrupted Gaming Night</h4>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Complimentary snacks & zero distractions provided.</p>
+          </div>
+          <button onclick="redeemCoupon(this)" class="coupon-btn px-4 py-2 bg-rose-50 text-rosedark border border-rose-300 rounded-xl text-xs font-bold hover:bg-rosedark hover:text-white transition whitespace-nowrap">
+            Redeem
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="letterSection" class="py-20 px-4 max-w-3xl mx-auto">
+      <div class="text-center mb-8">
+        <span class="text-roseaccent text-sm font-bold uppercase tracking-widest">Confidential & Sealed</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-gray-800 mt-1">A Letter Just For You</h2>
+        <p class="text-gray-500 mt-2 text-sm sm:text-base">Tap the wax seal to unlock the message inside.</p>
+      </div>
+
+      <!-- Digital Envelope Container -->
+      <div class="relative bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-rose-100 min-h-[380px] flex flex-col justify-center items-center transition-all duration-500 overflow-hidden" id="envelopeBox">
+        
+        <!-- Closed Envelope State View -->
+        <div id="envelopeCover" class="text-center transition-all duration-500">
+          <div class="relative inline-block cursor-pointer group" onclick="openEnvelope()">
+            <!-- Wax Seal Icon -->
+            <div class="w-24 h-24 rounded-full bg-gradient-to-br from-red-700 via-rosedark to-red-900 mx-auto shadow-lg flex items-center justify-center border-4 border-amber-300/60 transform group-hover:scale-105 group-hover:rotate-6 transition duration-300">
+              <span class="text-3xl text-amber-200 font-serif font-bold">💌</span>
+            </div>
+            <p class="mt-4 text-xs font-bold tracking-widest uppercase text-rosedark">Click to Break Wax Seal</p>
+          </div>
+        </div>
+
+        <!-- Opened Letter State View (Initially Hidden) -->
+        <div id="envelopeLetter" class="hidden w-full text-left transition-all duration-700">
+          <div class="border-b border-rose-100 pb-4 mb-4 flex justify-between items-center">
+            <span class="text-xs uppercase font-mono tracking-wider text-roseaccent font-bold">To: <span id="letterRecipient">My Favorite Guy</span></span>
+            <span class="text-xs text-gray-400 font-mono" id="currentDateDisplay">Today</span>
+          </div>
+
+          <div id="typewriterBody" class="font-serif text-gray-800 text-base sm:text-lg leading-relaxed space-y-4">
+            <!-- Text populated dynamically via typewriter effect -->
+          </div>
+
+          <div class="mt-8 pt-4 border-t border-rose-100 flex justify-between items-end">
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-widest font-mono">With all my love,</p>
+              <p id="letterSender" class="font-handwritten text-3xl text-rosedark">Yours Always 💕</p>
+            </div>
+            <button onclick="resetLetter()" class="text-xs text-gray-400 hover:text-gray-600 underline">Fold back</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="py-20 px-4 text-center max-w-xl mx-auto relative mb-12">
+      <div class="bg-white/90 backdrop-blur-md rounded-3xl p-8 sm:p-10 border border-rose-200 shadow-xl relative overflow-hidden">
+        <span class="text-4xl">💍✨</span>
+        <h3 class="text-2xl sm:text-3xl font-serif font-bold text-gray-800 mt-3">Final Serious Question</h3>
+        <p class="text-gray-600 mt-2 text-sm sm:text-base">Will you be my favorite person, best friend & boyfriend forever?</p>
+
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[90px]">
+          <!-- YES Button -->
+          <button id="yesBtn" onclick="handleYesClick()" class="w-full sm:w-auto px-8 py-3.5 bg-rosedark hover:bg-roseaccent text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-200">
+            YES, Absolutely! 🥰
+          </button>
+
+          <!-- Runaway NO Button -->
+          <button id="noBtn" class="w-full sm:w-auto px-6 py-3.5 bg-gray-200 text-gray-600 font-semibold rounded-full hover:bg-gray-300 transition duration-150 sm:absolute">
+            No way 😝
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div id="celebrationModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl max-w-md w-full p-8 text-center shadow-2xl border border-rose-200 transform scale-95 transition duration-300" id="modalBox">
+        <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+          💖
+        </div>
+        <h3 class="text-2xl font-serif font-bold text-gray-900">Good Choice! 🥰</h3>
+        <p class="text-gray-600 text-sm sm:text-base mt-2 leading-relaxed">
+          I knew you wouldn't be able to resist! Happy Boyfriend's Day to the sweetest, most amazing guy in the world. I love you more than all the stars!
+        </p>
+        <button onclick="closeModal()" class="mt-6 w-full py-3 bg-rosedark text-white font-semibold rounded-full hover:bg-roseaccent transition shadow-md">
+          Give Hugs & Kisses 💕
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <aside id="customDrawer" class="fixed inset-y-0 right-0 max-w-sm w-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-rose-100 p-6 flex flex-col justify-between">
+    <div>
+      <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+        <h4 class="font-bold text-gray-800 text-base">Personalize This Card</h4>
+        <button id="closeDrawerBtn" class="text-gray-400 hover:text-gray-700 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="mt-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">His Name / Nickname</label>
+          <input type="text" id="inputBoyfriendName" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark" value="Sweetheart">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Your Name / Sign-off</label>
+          <input type="text" id="inputSenderName" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark" value="Yours Always 💕">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Relationship Start Date</label>
+          <input type="date" id="inputStartDate" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark">
+          <p class="text-[11px] text-gray-400 mt-1">Used to calculate the days elapsed live.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Custom Letter Message</label>
+          <textarea id="inputCustomLetter" rows="5" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark" placeholder="Write your personal words..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-gray-100 flex space-x-2">
+      <button onclick="applyCustomizations()" class="flex-1 py-2.5 bg-rosedark text-white font-semibold rounded-xl text-xs hover:bg-roseaccent transition">Save & Apply</button>
+      <button onclick="resetDefaults()" class="px-3 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-xs hover:bg-gray-50">Reset</button>
+    </div>
+  </aside>
+
+  <script>
+    /* -------------------------------------------------------------
+       1. Ambient Lo-Fi Synth Generator using Web Audio API
+       No external sound files required! Runs natively in modern browsers.
+       ------------------------------------------------------------- */
+    let audioCtx = null;
+    let isPlaying = false;
+    let lofiInterval = null;
+
+    // Sweet pentatonic chord frequencies for warm romantic vibes
+    const chords = [
+      [261.63, 329.63, 392.00, 493.88], // Cmaj7
+      [220.00, 261.63, 329.63, 392.00], // Am7
+      [174.61, 220.00, 261.63, 329.63], // Fmaj7
+      [196.00, 246.94, 293.66, 349.23]  // G7
+    ];
+    let chordIndex = 0;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playWarmChord(freqs) {
+      if (!audioCtx || audioCtx.state !== 'running') return;
+      const now = audioCtx.currentTime;
+
+      freqs.forEach(freq => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        // Warm triangle and sine waves
+        osc.type = Math.random() > 0.5 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        // Soft envelope: slow attack and gentle decay
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.04, now + 0.8);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 3.3);
+      });
+    }
+
+    function toggleMusic() {
+      initAudio();
+      const playIcon = document.getElementById('musicPlayIcon');
+      const pauseIcon = document.getElementById('musicPauseIcon');
+      const statusText = document.getElementById('musicStatusText');
+
+      if (!isPlaying) {
+        isPlaying = true;
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        statusText.innerText = "Playing Warm Lofi";
+
+        // Play immediate chord
+        playWarmChord(chords[chordIndex]);
+        chordIndex = (chordIndex + 1) % chords.length;
+
+        // Schedule ambient chords every 3.2 seconds
+        lofiInterval = setInterval(() => {
+          playWarmChord(chords[chordIndex]);
+          chordIndex = (chordIndex + 1) % chords.length;
+        }, 3200);
+      } else {
+        isPlaying = false;
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        statusText.innerText = "Lo-Fi Tunes";
+        if (lofiInterval) clearInterval(lofiInterval);
+      }
+    }
+    document.getElementById('musicToggleBtn').addEventListener('click', toggleMusic);
+
+    /* -------------------------------------------------------------
+       2. Floating Heart Particles Generator
+       ------------------------------------------------------------- */
+    function createFloatingHeart() {
+      const container = document.getElementById('heartContainer');
+      const heart = document.createElement('div');
+      heart.className = 'heart-particle select-none';
+      heart.innerText = ['💖', '✨', '🌸', '💕', '🌷'][Math.floor(Math.random() * 5)];
+      
+      const leftPos = Math.random() * 100;
+      const duration = 5 + Math.random() * 6;
+      const size = 14 + Math.random() * 18;
+
+      heart.style.left = `${leftPos}vw`;
+      heart.style.animationDuration = `${duration}s`;
+      heart.style.fontSize = `${size}px`;
+
+      container.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, duration * 1000);
+    }
+    // Spawn subtle floating hearts
+    setInterval(createFloatingHeart, 800);
+
+    /* -------------------------------------------------------------
+       3. 3D Card Flip Handler
+       ------------------------------------------------------------- */
+    function toggleCardFlip(element) {
+      const inner = element.firstElementChild;
+      inner.classList.toggle('rotate-y-180');
+    }
+
+    /* -------------------------------------------------------------
+       4. Love Coupons Redemption with Confetti
+       ------------------------------------------------------------- */
+    function redeemCoupon(btn) {
+      if (btn.classList.contains('redeemed')) return;
+
+      btn.classList.add('redeemed');
+      btn.innerText = 'Redeemed! 🎉';
+      btn.classList.remove('bg-rose-50', 'text-rosedark', 'border-rose-300');
+      btn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600');
+
+      // Trigger localized micro-confetti burst
+      confetti({
+        particleCount: 40,
+        spread: 60,
+        origin: { 
+          x: btn.getBoundingClientRect().left / window.innerWidth,
+          y: btn.getBoundingClientRect().top / window.innerHeight
+        }
+      });
+    }
+
+    /* -------------------------------------------------------------
+       5. Wax Seal Opening & Typewriter Letter
+       ------------------------------------------------------------- */
+    let defaultLetterContent = "Thank you for being my constant warmth, my goofy partner in crime, and the calm in all of life's noisy storms.\n\nFrom our silliest banter to the days when we don't even need words, being around you feels like coming home. You make ordinary days feel like adventures, and hard days so much lighter.\n\nHappy Boyfriend's Day! I'm beyond lucky to have you by my side today and every day.";
+
+    let activeLetterText = defaultLetterContent;
+
+    function openEnvelope() {
+      const cover = document.getElementById('envelopeCover');
+      const letter = document.getElementById('envelopeLetter');
+      const typewriterBody = document.getElementById('typewriterBody');
+
+      // Seal popping sound/confetti
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      cover.classList.add('hidden');
+      letter.classList.remove('hidden');
+
+      // Typewriter animation
+      typewriterBody.innerHTML = '';
+      let charIndex = 0;
+      const paragraphs = activeLetterText.split('\n\n');
+      let pElem = document.createElement('p');
+      typewriterBody.appendChild(pElem);
+
+      function typeNext() {
+        if (charIndex < activeLetterText.length) {
+          const char = activeLetterText.charAt(charIndex);
+          if (char === '\n' && activeLetterText.charAt(charIndex + 1) === '\n') {
+            pElem = document.createElement('p');
+            typewriterBody.appendChild(pElem);
+            charIndex += 2;
+          } else {
+            pElem.innerHTML += char;
+            charIndex++;
+          }
+          setTimeout(typeNext, 20);
+        }
+      }
+      typeNext();
+    }
+
+    function resetLetter() {
+      document.getElementById('envelopeLetter').classList.add('hidden');
+      document.getElementById('envelopeCover').classList.remove('hidden');
+    }
+
+    /* -------------------------------------------------------------
+       6. Playful Runaway "NO" Button Logic
+       ------------------------------------------------------------- */
+    const noBtn = document.getElementById('noBtn');
+
+    function escapeButton() {
+      const xOffset = (Math.random() - 0.5) * 260;
+      const yOffset = (Math.random() - 0.5) * 160;
+
+      noBtn.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      
+      const playfulQuotes = ["Nice try! 😜", "Nope! 🏃‍♂️", "Can't click me!", "Try again! 💖", "Error 404: No found"];
+      noBtn.innerText = playfulQuotes[Math.floor(Math.random() * playfulQuotes.length)];
+    }
+
+    noBtn.addEventListener('mouseenter', escapeButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      escapeButton();
+    });
+
+    function handleYesClick() {
+      // Full screen confetti celebration
+      confetti({
+        particleCount: 120,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+
+      const modal = document.getElementById('celebrationModal');
+      const box = document.getElementById('modalBox');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        box.classList.remove('scale-95');
+        box.classList.add('scale-100');
+      }, 20);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('celebrationModal');
+      const box = document.getElementById('modalBox');
+      box.classList.remove('scale-100');
+      box.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150);
+    }
+
+    /* -------------------------------------------------------------
+       7. Personalization Drawer & Live Updates
+       ------------------------------------------------------------- */
+    const drawer = document.getElementById('customDrawer');
+    const drawerToggleBtn = document.getElementById('drawerToggleBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+    drawerToggleBtn.addEventListener('click', () => {
+      drawer.classList.remove('translate-x-full');
+    });
+
+    closeDrawerBtn.addEventListener('click', () => {
+      drawer.classList.add('translate-x-full');
+    });
+
+    // Default relationship date: ~1 year ago
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    document.getElementById('inputStartDate').value = oneYearAgo.toISOString().split('T')[0];
+    document.getElementById('inputCustomLetter').value = defaultLetterContent;
+
+    function updateCounter(startDateStr) {
+      const start = new Date(startDateStr);
+      const now = new Date();
+      const diffMs = now - start;
+
+      if (isNaN(diffMs) || diffMs < 0) {
+        document.getElementById('counterDays').innerText = "0";
+        document.getElementById('counterHours').innerText = "0";
+        return;
+      }
+
+      const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+
+      document.getElementById('counterDays').innerText = totalDays;
+      document.getElementById('counterHours').innerText = totalHours;
+    }
+
+    function applyCustomizations() {
+      const name = document.getElementById('inputBoyfriendName').value.trim() || 'Sweetheart';
+      const sender = document.getElementById('inputSenderName').value.trim() || 'Yours Always 💕';
+      const date = document.getElementById('inputStartDate').value;
+      const customLetter = document.getElementById('inputCustomLetter').value.trim();
+
+      document.getElementById('headerBoyfriendName').innerText = `For ${name}`;
+      document.getElementById('heroBoyfriendName').innerText = name;
+      document.getElementById('letterRecipient').innerText = name;
+      document.getElementById('letterSender').innerText = sender;
+
+      if (customLetter) {
+        activeLetterText = customLetter;
+      }
+
+      if (date) {
+        updateCounter(date);
+      }
+
+      drawer.classList.add('translate-x-full');
+
+      // Small confetti feedback
+      confetti({
+        particleCount: 30,
+        spread: 50,
+        origin: { x: 0.9, y: 0.2 }
+      });
+    }
+
+    function resetDefaults() {
+      document.getElementById('inputBoyfriendName').value = 'Sweetheart';
+      document.getElementById('inputSenderName').value = 'Yours Always 💕';
+      document.getElementById('inputCustomLetter').value = defaultLetterContent;
+      applyCustomizations();
+    }
+
+    // Set today's date formatted on letter
+    const today = new Date();
+    document.getElementById('currentDateDisplay').innerText = today.toLocaleDateString(undefined, { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+
+    // Initialize counter with default date
+    updateCounter(document.getElementById('inputStartDate').value);
+  </script>
+</body>
+</html>
