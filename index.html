@@ -92,6 +92,18 @@
     .glow-pulse {
       animation: gentlePulse 3s infinite ease-in-out;
     }
+
+    /* Input photo mask for Red Ranger helmet */
+    .ranger-helmet-mask {
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0 C 10 0, 0 40, 0 60 L 0 85 C 0 95, 10 100, 25 100 L 75 100 C 90 100, 100 95, 100 85 L 100 60 C 100 40, 90 0, 50 0 Z"></path></svg>');
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0 C 10 0, 0 40, 0 60 L 0 85 C 0 95, 10 100, 25 100 L 75 100 C 90 100, 100 95, 100 85 L 100 60 C 100 40, 90 0, 50 0 Z"></path></svg>');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
   </style>
 </head>
 
@@ -99,11 +111,11 @@
 
   <div id="heartContainer" class="pointer-events-none fixed inset-0 overflow-hidden z-0"></div>
 
-  <!-- Top Floating Ambient Audio & Customize Bar -->
+  <!-- Top Floating Ambient Audio Bar -->
   <header class="fixed top-4 left-0 right-0 z-40 px-4 max-w-5xl mx-auto flex items-center justify-between pointer-events-none">
     <div class="pointer-events-auto bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-rose-100 shadow-sm flex items-center space-x-2 text-xs font-medium text-gray-700">
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-      <span id="headerBoyfriendName">For My Favorite Human</span>
+      <span id="headerBoyfriendName">For Gini, My Favorite Human</span>
     </div>
 
     <div class="pointer-events-auto flex items-center space-x-2">
@@ -112,12 +124,6 @@
         <svg id="musicPlayIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         <svg id="musicPauseIcon" class="w-4 h-4 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
         <span id="musicStatusText">Lo-Fi Tunes</span>
-      </button>
-
-      <!-- Personalize Drawer Toggle -->
-      <button id="drawerToggleBtn" class="bg-rosedark text-white px-3.5 py-1.5 rounded-full shadow-sm hover:bg-roseaccent transition text-xs font-medium flex items-center space-x-1.5">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-        <span>Edit Card</span>
       </button>
     </div>
   </header>
@@ -129,13 +135,36 @@
       </div>
 
       <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-gray-900 leading-tight max-w-3xl mb-4">
-        To My Favorite Guy, <br>
+        To My Power Ranger Guy, <br>
         <span id="heroBoyfriendName" class="text-rosedark font-handwritten text-5xl sm:text-7xl md:text-8xl">Gini</span>!
       </h1>
 
       <p class="max-w-xl text-gray-600 text-base sm:text-lg mb-8 leading-relaxed">
         Today is all about you: your warmth, your contagious laugh, your patient soul, and every small moment that makes life 100x brighter.
       </p>
+
+      <!-- Input Photo Integrated into Red Ranger Helmet -->
+      <div class="relative w-64 h-64 mb-10 mx-auto glow-pulse">
+        <div class="ranger-helmet-mask w-full h-full bg-[#E31C21] rounded-t-[50px] rounded-b-[25px] flex items-center justify-center relative overflow-hidden shadow-2xl">
+          <!-- Helmet Details -->
+          <div class="absolute top-0 left-0 w-full h-full border-[6px] border-[#C0C0C0] rounded-t-[50px] rounded-b-[25px] z-20"></div>
+          <div class="absolute top-1/2 left-0 w-full h-4 bg-black -translate-y-1/2 z-10"></div>
+          
+          <!-- Visor Area with Input Photo -->
+          <div class="w-[90%] h-[60%] bg-black rounded-full z-30 flex items-center justify-center relative border-4 border-black">
+            <div class="w-full h-full rounded-full overflow-hidden flex items-center justify-center bg-stone-900">
+              <img id="inputBoyfriendPhoto" src="https://i.postimg.cc/D0Mf2H0f/Chat-GPT-Image-Oct-3-2026-12-11-36-PM.png" alt="His Portrait" class="w-full h-full object-cover object-center scale-[1.15]" loading="lazy">
+            </div>
+          </div>
+          
+          <!-- Mouthpiece -->
+          <div class="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-20 h-10 bg-[#C0C0C0] rounded-lg z-20 border-2 border-black flex items-center justify-center">
+            <div class="w-16 h-1 bg-black rounded-full"></div>
+          </div>
+        </div>
+        <!-- Gini Nickname Text below Helmet -->
+        <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 font-handwritten text-2xl text-rosedark z-40 bg-white/60 px-2 rounded-full backdrop-blur-sm">Power Ranger SPG</span>
+      </div>
 
       <!-- Interactive Days Counter / Badge -->
       <div class="bg-white/80 backdrop-blur-md border border-rose-100 rounded-3xl p-6 shadow-xl mb-10 max-w-md w-full mx-auto glow-pulse">
@@ -157,11 +186,11 @@
         <p id="counterSubtitle" class="text-xs text-gray-500 mt-4 italic font-handwritten text-lg">Since the day you walked into my life</p>
       </div>
 
-      <!-- Quick Jump Button -->
+      <!-- Quick Jump Button
       <a href="#letterSection" class="inline-flex items-center space-x-2 bg-rosedark text-white font-medium px-6 py-3 rounded-full hover:bg-roseaccent transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
         <span>Open Your Special Letter</span>
         <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-      </a>
+      </a> -->
     </section>
 
     <section class="py-16 px-4 max-w-6xl mx-auto">
@@ -176,44 +205,153 @@
         <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform group-hover:-translate-y-2 group-hover:rotate-1 relative border border-stone-200">
           <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-2 z-10 opacity-80"></div>
           <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center relative">
-            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="400" fill="#FDF0ED"/>
-              <circle cx="200" cy="160" r="70" fill="#F8C5BD"/>
-              <path d="M120 320C120 260 160 230 200 230C240 230 280 260 280 320" fill="#E1707F"/>
-              <text x="50%" y="360" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#8A4A4A">First Unforgettable Date</text>
-            </svg>
+            <img src="https://i.postimg.cc/J06vjfBZ/Whats-App-Image-2026-10-03-at-12-56-37-PM.jpg" alt="Our First Unforgettable Date" class="w-full h-full object-cover">
           </div>
-          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Where butterflies turned into forever smiles ☕️</p>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Where butterflies turned into forever smiles</p>
           <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 01</span>
+        </div>
+        
+        <!-- Polaroid 1 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform group-hover:-translate-y-2 group-hover:rotate-1 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-2 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center relative">
+            <img src="https://i.postimg.cc/vBw3KZvn/Whats-App-Image-2026-10-03-at-12-28-37-PM.jpg" alt="Our First Unforgettable Date" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">First Date - Cutu</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 02</span>
         </div>
 
         <!-- Polaroid 2 -->
         <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform -rotate-1 group-hover:rotate-0 relative border border-stone-200">
           <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 -rotate-2 z-10 opacity-80"></div>
           <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
-            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="400" fill="#EBF4F6"/>
-              <circle cx="200" cy="180" r="90" fill="#C4E0E5"/>
-              <path d="M160 170L190 200L250 140" stroke="#3A7080" stroke-width="8" stroke-linecap="round"/>
-              <text x="50%" y="340" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#2D5564">Roadtrips & Late Drives</text>
-            </svg>
+            <img src="https://i.postimg.cc/CL7XfksW/Whats-App-Image-2026-10-03-at-12-25-00-PM.jpg" alt="Long Drives - our kinda drives" class="w-full h-full object-cover">
           </div>
-          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Singing terribly off-key with the windows rolled down 🎶</p>
-          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 02</span>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Long Drives - our kinda drives</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 03</span>
+        </div>
+
+        <!-- Polaroid 3 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform -rotate-1 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 -rotate-2 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/HkCRX9rb/Whats-App-Image-2026-10-03-at-12-53-49-PM.jpg" alt="Long Drives - our kinda drives" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Oh my godd - Dekh nhi paa rha tumhari taraf</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 04</span>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform -rotate-1 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 -rotate-2 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/QCtnNfYm/Whats-App-Image-2026-10-03-at-12-53-15-PM.jpg" alt="Long Drives - our kinda drives" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Birthdays</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 05</span>
         </div>
 
         <!-- Polaroid 3 -->
         <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
           <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
           <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
-            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="400" fill="#FFF2E2"/>
-              <path d="M200 130 C170 80 90 90 90 160 C90 220 200 290 200 290 C200 290 310 220 310 160 C310 90 230 80 200 130 Z" fill="#F8C57A"/>
-              <text x="50%" y="350" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#8B602A">Cozy Couch Potato Evenings</text>
-            </svg>
+            <img src="https://i.postimg.cc/rscZDw0F/Whats-App-Image-2026-10-03-at-12-22-32-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
           </div>
           <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">My safe haven at the end of every exhausting day 🛋️</p>
-          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 03</span>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 06</span>
+        </div>
+        <!-- Polaroid 4 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div cl
+          ass="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/0jRRcv6R/Whats-App-Image-2026-10-03-at-12-21-41-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Beer Date 🍻</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 07</span>
+        </div>
+        <!-- Polaroid 5 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/MZMFLFR9/Whats-App-Image-2026-10-03-at-12-52-34-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">MOVIE?</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 08</span>
+        </div>
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/VNvRCJWF/Whats-App-Image-2026-10-03-at-12-52-02-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">First Fight??</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 09</span>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/BvjTvdJj/Whats-App-Image-2026-10-03-at-12-54-22-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Mhmmmm... Netflix n Chill</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 11</span>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/XqkFhWkh/Whats-App-Image-2026-10-03-at-12-51-24-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Good Bye and Somethingg 👀</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 12</span>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/0Qgwyjth/Whats-App-Image-2026-10-03-at-12-55-19-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Long Distance Crazinessss</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 13</span>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/BQhP1MYN/Whats-App-Image-2026-10-03-at-12-55-51-PM.jpg" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Sleeepyyy Headdd</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 14</span>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <img src="https://i.postimg.cc/L6snRj95/Screenshot-2026-10-03-at-1-12-46-PM.png" alt="My safe haven at the end of every exhausting day 🛋️" class="w-full h-full object-cover">
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Sorry Bolooo Jldii</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 15</span>
+        </div>
+
+        <!-- Polaroid 6 -->
+        <div class="group bg-white p-4 pb-8 rounded-lg shadow-md hover:shadow-2xl transition duration-300 transform rotate-2 group-hover:rotate-0 relative border border-stone-200">
+          <div class="washi-tape absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 rotate-1 z-10 opacity-80"></div>
+          <div class="aspect-square w-full overflow-hidden rounded bg-stone-100 mb-4 flex items-center justify-center">
+            <svg class="w-full h-full object-cover" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="400" height="400" fill="#FDF0ED"/>
+    <circle cx="200" cy="160" r="70" fill="#F8C5BD"/>
+    <path d="M120 320C120 260 160 230 200 230C240 230 280 260 280 320" fill="#E1707F"/>
+    <text x="50%" y="360" text-anchor="middle" font-family="'Plus Jakarta Sans'" font-size="16" fill="#8A4A4A">Jldi Jldi aao</text>
+  </svg>
+          </div>
+          <p class="font-handwritten text-2xl text-center text-gray-700 leading-tight">Convo.. Coming Soon</p>
+          <span class="block text-center text-[11px] text-gray-400 mt-2 font-mono uppercase">Chapter 16</span>
         </div>
       </div>
     </section>
@@ -243,7 +381,8 @@
               <!-- Back -->
               <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
                 <p class="text-sm font-medium leading-relaxed">
-                  Whether it's debugging my bad mood, fixing things around the house, or calm listening when I'm stressed. You always know what to do.
+                  Whether it's debugging my bad mood, or fixing things i have messed up or faaltu ka stress, you know it all!
+                  Best example REDDIT
                 </p>
                 <span class="text-xs text-roseaccent font-bold mt-4">10/10 Reliability Rating</span>
               </div>
@@ -265,7 +404,7 @@
               <!-- Back -->
               <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
                 <p class="text-sm font-medium leading-relaxed">
-                  For sharing your fries, making impromptu treats, and never judging when I ask for a midnight sweet tooth run.
+                  Hehe Mota kr rha h tm merko khila khila ke.. i have all the bills.. cannot have better proof
                 </p>
                 <span class="text-xs text-roseaccent font-bold mt-4">Michelin Star Sweetness</span>
               </div>
@@ -279,7 +418,7 @@
               <div class="absolute inset-0 backface-hidden p-6 flex flex-col justify-between bg-white rounded-2xl">
                 <span class="text-3xl">🫂</span>
                 <div>
-                  <h3 class="font-bold text-lg text-gray-800">The Warmest Hugs</h3>
+                  <h3 class="font-bold text-lg text-gray-800">The Warmest Hugs and Sweetest Kisses</h3>
                   <p class="text-xs text-gray-400 mt-1">Click to flip ↷</p>
                 </div>
                 <div class="h-1 w-12 bg-rose-200 rounded"></div>
@@ -287,7 +426,7 @@
               <!-- Back -->
               <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
                 <p class="text-sm font-medium leading-relaxed">
-                  Your hugs make the chaos of the world vanish in 5 seconds flat. It's scientifically proven to lower my cortisol.
+                  Even the virtual ones are working like magic.. physical ka toh kya hi bole
                 </p>
                 <span class="text-xs text-roseaccent font-bold mt-4">Unlimited Supply Required</span>
               </div>
@@ -309,7 +448,7 @@
               <!-- Back -->
               <div class="absolute inset-0 backface-hidden rotate-y-180 p-6 flex flex-col justify-center items-center text-center bg-rose-50 text-rosedark rounded-2xl border border-rose-200">
                 <p class="text-sm font-medium leading-relaxed">
-                  You believe in me even when I doubt myself. Having you in my corner is my greatest cheat code in life.
+                  You believe in me even when I doubt myself. Having you in my corner is my greatest cheat code in life. Placements proved this.
                 </p>
                 <span class="text-xs text-roseaccent font-bold mt-4">#1 Supporter Ever</span>
               </div>
@@ -374,8 +513,8 @@
         <div class="coupon-card bg-white border-2 border-dashed border-rose-300 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition relative overflow-hidden group">
           <div>
             <div class="flex items-center space-x-2">
-              <span class="text-2xl">🎮</span>
-              <h4 class="font-bold text-gray-800">Uninterrupted Gaming Night</h4>
+              <span class="text-2xl">👀</span>
+              <h4 class="font-bold text-gray-800">Uninterrupted Cuddle Night</h4>
             </div>
             <p class="text-xs text-gray-500 mt-1">Complimentary snacks & zero distractions provided.</p>
           </div>
@@ -410,7 +549,7 @@
         <!-- Opened Letter State View (Initially Hidden) -->
         <div id="envelopeLetter" class="hidden w-full text-left transition-all duration-700">
           <div class="border-b border-rose-100 pb-4 mb-4 flex justify-between items-center">
-            <span class="text-xs uppercase font-mono tracking-wider text-roseaccent font-bold">To: <span id="letterRecipient">My Favorite Guy</span></span>
+            <span class="text-xs uppercase font-mono tracking-wider text-roseaccent font-bold">To: <span id="letterRecipient">My Favorite Guy, Gini</span></span>
             <span class="text-xs text-gray-400 font-mono" id="currentDateDisplay">Today</span>
           </div>
 
@@ -421,7 +560,7 @@
           <div class="mt-8 pt-4 border-t border-rose-100 flex justify-between items-end">
             <div>
               <p class="text-xs text-gray-400 uppercase tracking-widest font-mono">With all my love,</p>
-              <p id="letterSender" class="font-handwritten text-3xl text-rosedark">Yours Always 💕</p>
+              <p id="letterSender" class="font-handwritten text-3xl text-rosedark">Yours Always 💕 - FRISHU 🐡</p>
             </div>
             <button onclick="resetLetter()" class="text-xs text-gray-400 hover:text-gray-600 underline">Fold back</button>
           </div>
@@ -432,9 +571,9 @@
 
     <section class="py-20 px-4 text-center max-w-xl mx-auto relative mb-12">
       <div class="bg-white/90 backdrop-blur-md rounded-3xl p-8 sm:p-10 border border-rose-200 shadow-xl relative overflow-hidden">
-        <span class="text-4xl">💍✨</span>
+        <span class="text-4xl">✨</span>
         <h3 class="text-2xl sm:text-3xl font-serif font-bold text-gray-800 mt-3">Final Serious Question</h3>
-        <p class="text-gray-600 mt-2 text-sm sm:text-base">Will you be my favorite person, best friend & boyfriend forever?</p>
+        <p class="text-gray-600 mt-2 text-sm sm:text-base">You will always agree that i am Right?</p>
 
         <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[90px]">
           <!-- YES Button -->
@@ -457,7 +596,7 @@
         </div>
         <h3 class="text-2xl font-serif font-bold text-gray-900">Good Choice! 🥰</h3>
         <p class="text-gray-600 text-sm sm:text-base mt-2 leading-relaxed">
-          I knew you wouldn't be able to resist! Happy Boyfriend's Day to the sweetest, most amazing guy in the world. I love you more than all the stars!
+          I knew you wouldn't be able to resist! Happy Boyfriend's Day Gini, to the sweetest, most amazing guy in the world. I love you more than all the stars!
         </p>
         <button onclick="closeModal()" class="mt-6 w-full py-3 bg-rosedark text-white font-semibold rounded-full hover:bg-roseaccent transition shadow-md">
           Give Hugs & Kisses 💕
@@ -466,45 +605,6 @@
     </div>
 
   </main>
-
-  <aside id="customDrawer" class="fixed inset-y-0 right-0 max-w-sm w-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-rose-100 p-6 flex flex-col justify-between">
-    <div>
-      <div class="flex items-center justify-between pb-4 border-b border-gray-100">
-        <h4 class="font-bold text-gray-800 text-base">Personalize This Card</h4>
-        <button id="closeDrawerBtn" class="text-gray-400 hover:text-gray-700 p-1">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <div class="mt-6 space-y-4">
-        <div>
-          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">His Name / Nickname</label>
-          <input type="text" id="inputBoyfriendName" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark" value="Sweetheart">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Your Name / Sign-off</label>
-          <input type="text" id="inputSenderName" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark" value="Yours Always 💕">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Relationship Start Date</label>
-          <input type="date" id="inputStartDate" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark">
-          <p class="text-[11px] text-gray-400 mt-1">Used to calculate the days elapsed live.</p>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Custom Letter Message</label>
-          <textarea id="inputCustomLetter" rows="5" class="w-full text-sm px-3.5 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-rosedark" placeholder="Write your personal words..."></textarea>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-4 border-t border-gray-100 flex space-x-2">
-      <button onclick="applyCustomizations()" class="flex-1 py-2.5 bg-rosedark text-white font-semibold rounded-xl text-xs hover:bg-roseaccent transition">Save & Apply</button>
-      <button onclick="resetDefaults()" class="px-3 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-xs hover:bg-gray-50">Reset</button>
-    </div>
-  </aside>
 
   <script>
     /* -------------------------------------------------------------
@@ -649,9 +749,7 @@
     /* -------------------------------------------------------------
        5. Wax Seal Opening & Typewriter Letter
        ------------------------------------------------------------- */
-    let defaultLetterContent = "Thank you for being my constant warmth, my goofy partner in crime, and the calm in all of life's noisy storms.\n\nFrom our silliest banter to the days when we don't even need words, being around you feels like coming home. You make ordinary days feel like adventures, and hard days so much lighter.\n\nHappy Boyfriend's Day! I'm beyond lucky to have you by my side today and every day.";
-
-    let activeLetterText = defaultLetterContent;
+    let activeLetterText = "To My Power Ranger Gini, My love, the day 8 Jan 2026 was the moment my life leveled up. Thank you for being my anchor, my constant cheerleader, and the one who always makes me smile. My absolute favourite, I call you my Gini because you truly make my dreams come true. I love you the abstract, total, absolute, unconditional most! You're my hero, jhel jhel absolute safe total. Kya ही होगा तुम्हारा मेरे बिना, but really, mera kya hota tumhare bina? ❤️";
 
     function openEnvelope() {
       const cover = document.getElementById('envelopeCover');
@@ -746,26 +844,8 @@
     }
 
     /* -------------------------------------------------------------
-       7. Personalization Drawer & Live Updates
+       7. Live Counter Logic
        ------------------------------------------------------------- */
-    const drawer = document.getElementById('customDrawer');
-    const drawerToggleBtn = document.getElementById('drawerToggleBtn');
-    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-
-    drawerToggleBtn.addEventListener('click', () => {
-      drawer.classList.remove('translate-x-full');
-    });
-
-    closeDrawerBtn.addEventListener('click', () => {
-      drawer.classList.add('translate-x-full');
-    });
-
-    // Default relationship date: ~1 year ago
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-    document.getElementById('inputStartDate').value = oneYearAgo.toISOString().split('T')[0];
-    document.getElementById('inputCustomLetter').value = defaultLetterContent;
-
     function updateCounter(startDateStr) {
       const start = new Date(startDateStr);
       const now = new Date();
@@ -784,42 +864,6 @@
       document.getElementById('counterHours').innerText = totalHours;
     }
 
-    function applyCustomizations() {
-      const name = document.getElementById('inputBoyfriendName').value.trim() || 'Sweetheart';
-      const sender = document.getElementById('inputSenderName').value.trim() || 'Yours Always 💕';
-      const date = document.getElementById('inputStartDate').value;
-      const customLetter = document.getElementById('inputCustomLetter').value.trim();
-
-      document.getElementById('headerBoyfriendName').innerText = `For ${name}`;
-      document.getElementById('heroBoyfriendName').innerText = name;
-      document.getElementById('letterRecipient').innerText = name;
-      document.getElementById('letterSender').innerText = sender;
-
-      if (customLetter) {
-        activeLetterText = customLetter;
-      }
-
-      if (date) {
-        updateCounter(date);
-      }
-
-      drawer.classList.add('translate-x-full');
-
-      // Small confetti feedback
-      confetti({
-        particleCount: 30,
-        spread: 50,
-        origin: { x: 0.9, y: 0.2 }
-      });
-    }
-
-    function resetDefaults() {
-      document.getElementById('inputBoyfriendName').value = 'Sweetheart';
-      document.getElementById('inputSenderName').value = 'Yours Always 💕';
-      document.getElementById('inputCustomLetter').value = defaultLetterContent;
-      applyCustomizations();
-    }
-
     // Set today's date formatted on letter
     const today = new Date();
     document.getElementById('currentDateDisplay').innerText = today.toLocaleDateString(undefined, { 
@@ -828,8 +872,8 @@
       day: 'numeric' 
     });
 
-    // Initialize counter with default date
-    updateCounter(document.getElementById('inputStartDate').value);
+    // Initialize counter with start date: January 8, 2026
+    updateCounter('2026-01-08');
   </script>
 </body>
 </html>
